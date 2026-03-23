@@ -1,11 +1,21 @@
+from telegram import Update
+from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler
 
-def print_hi(name):
+import os
+from dotenv import load_dotenv
 
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+load_dotenv()
+
+TOKEN_BOT = os.getenv("TOKEN_TELEGRAM")
+
+async def hello(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_message(update.effective_message.id,"Здарова")
 
 
 
-if __name__ == '__main__':
-    print_hi('PyCharm')
+app = ApplicationBuilder().token(TOKEN_BOT).build()
 
+app.add_handler(CommandHandler("hello",hello))
+
+app.run_polling()
 
